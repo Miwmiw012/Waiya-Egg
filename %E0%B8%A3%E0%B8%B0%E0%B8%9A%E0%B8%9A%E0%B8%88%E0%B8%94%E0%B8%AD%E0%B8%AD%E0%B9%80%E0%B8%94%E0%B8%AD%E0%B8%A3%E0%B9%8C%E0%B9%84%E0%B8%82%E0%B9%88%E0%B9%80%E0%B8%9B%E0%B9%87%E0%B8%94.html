@@ -1,34 +1,340 @@
-<!doctype html>
-<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b50"><title>จดออเดอร์ไข่เป็ด</title>
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ระบบจดออเดอร์ไข่เป็ด</title>
 <style>
-:root{--green:#176b50;--green2:#e4f4ec;--gold:#fff0cf;--blue:#e6f0ff;--ink:#172b25;--muted:#64746e;--line:#dce6e0;--bg:#f5f8f6;--red:#b42318}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,'Noto Sans Thai',Tahoma,sans-serif;font-size:16px}header{background:var(--green);color:white;padding:18px max(16px,calc((100% - 1080px)/2));}header h1{margin:0;font-size:clamp(22px,4vw,30px)}header p{margin:4px 0 0;color:#e3f4eb;font-size:14px}.wrap{max-width:1080px;margin:auto;padding:16px;display:grid;gap:16px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.stat,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 8px #173e2a0a}.stat small{color:var(--muted);display:block;font-size:13px}.stat strong{font-size:clamp(20px,4vw,28px);display:block;margin-top:4px;overflow-wrap:anywhere}.panel h2{font-size:20px;margin:0 0 14px}.prices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.price{border:2px solid var(--line);border-radius:14px;padding:14px 8px;background:white;font-size:19px;font-weight:800;cursor:pointer;min-height:72px}.price small{display:block;font-size:13px;font-weight:500}.price.active[data-price="125"]{border-color:#c78a20;background:var(--gold)}.price.active[data-price="135"]{border-color:#3c75c9;background:var(--blue)}label{display:block;font-weight:650;font-size:14px;margin:0 0 6px}input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid #bdcbc3;border-radius:10px;background:white;color:var(--ink);min-height:46px}textarea{resize:vertical} .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.qtyline{display:flex;gap:8px;align-items:center}.qtyline button{width:48px;height:48px;font-size:24px;font-weight:800;border:1px solid var(--line);border-radius:10px;background:#f2f7f4;cursor:pointer}.qtyline input{text-align:center;font-weight:800;font-size:20px;max-width:120px}.total{margin:16px 0;background:var(--green2);border-radius:12px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center}.total strong{font-size:26px;color:var(--green)}button{font:inherit;cursor:pointer}.primary{width:100%;background:var(--green);color:white;border:0;border-radius:12px;padding:15px;font-size:18px;font-weight:800;min-height:54px}.secondary{background:white;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:650}.danger{color:var(--red)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.toolbar input{flex:1;min-width:180px}.tablewrap{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px}.ordertable{width:100%;border-collapse:collapse;min-width:850px;background:white}.ordertable th,.ordertable td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:14px}.ordertable th{background:#edf5f0;white-space:nowrap}.ordertable tr:last-child td{border-bottom:0}.ordertable td.num{text-align:right;white-space:nowrap}.ordertable .actions{white-space:nowrap}.ordertable .actions button{margin:2px;padding:7px 9px}.customername{font-weight:800}.duecell{font-weight:800;color:var(--red)}.duezero{font-weight:800;color:var(--green)}.muted{color:var(--muted);font-size:13px}.pill{display:inline-block;background:#edf3ef;border-radius:999px;padding:5px 9px;font-size:12px;white-space:nowrap}.pill.wait{background:#fff0cf}.pill.done{background:#e0f4e7}.pill.cancel{background:#fde7e5}.empty{text-align:center;padding:25px;color:var(--muted)}.hint{font-size:13px;color:var(--muted);line-height:1.6}.notice{border-radius:10px;background:#fff5d9;padding:12px;font-size:13px;line-height:1.55}.hidden{display:none!important}footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}@media(min-width:820px){.wrap{grid-template-columns:0.92fr 1.08fr;align-items:start}.stats{grid-column:1/-1}.entry{grid-column:1}.orders{grid-column:2;grid-row:2 / span 2}}@media(max-width:520px){.wrap{padding:10px}.stats{gap:7px}.stat{padding:11px}.stat small{font-size:11px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:13px}.orderhead{display:block}.orderhead .pill{display:inline-block;margin-top:5px}}
-</style></head><body>
-<header><h1>🥚 จดออเดอร์ไข่เป็ด</h1><p>กดเลือกราคา · ใส่จำนวน · บันทึกออเดอร์</p></header>
-<main class="wrap">
-<section class="stats"><div class="stat"><small>ยอดขายที่ไม่ยกเลิก</small><strong id="sales">฿0</strong></div><div class="stat"><small>รับเงินแล้ว</small><strong id="paid">฿0</strong></div><div class="stat"><small>ยอดค้างชำระ</small><strong id="due">฿0</strong></div></section>
-<section class="panel entry"><h2 id="formTitle">➕ จดออเดอร์ใหม่</h2><form id="orderForm"><input id="editId" type="hidden"><label>เลือกราคา (ต่อแผง)</label><div class="prices"><button type="button" class="price active" data-price="125">125 บาท<small>ต่อแผง</small></button><button type="button" class="price" data-price="135">135 บาท<small>ต่อแผง</small></button></div><input id="price" type="hidden" value="125">
-<div class="fields"><div class="field"><label for="customer">ชื่อลูกค้า *</label><input id="customer" required placeholder="เช่น ป้าสมใจ"></div><div class="field"><label for="phone">เบอร์โทร</label><input id="phone" type="tel" inputmode="tel" placeholder="เบอร์โทรลูกค้า"></div><div class="field"><label for="orderDate">วันที่สั่ง *</label><input id="orderDate" type="date" required></div><div class="field"><label for="delivery">วันส่ง *</label><input id="delivery" type="date" required></div><div class="field"><label for="qty">จำนวนแผง *</label><div class="qtyline"><button type="button" id="minus" aria-label="ลดจำนวน">−</button><input id="qty" type="number" min="1" step="1" value="1" required inputmode="numeric"><button type="button" id="plus" aria-label="เพิ่มจำนวน">+</button></div></div><div class="field"><label for="paidInput">รับเงินแล้ว (บาท)</label><input id="paidInput" type="number" min="0" step="1" value="0" inputmode="numeric"></div><div class="field"><label for="deliveryStatus">สถานะส่งของ</label><select id="deliveryStatus"><option>รอจัดส่ง</option><option>ส่งแล้ว</option><option>ยกเลิก</option></select></div><div class="field full"><label for="note">หมายเหตุ (ถ้ามี)</label><textarea id="note" rows="2" placeholder="เช่น ส่งช่วงเช้า"></textarea></div></div>
-<div class="total"><div><div class="muted">ยอดออเดอร์</div><strong id="total">฿125</strong></div><div style="text-align:right"><div class="muted">ค้างชำระ</div><strong id="liveDue">฿125</strong></div></div><button class="primary" id="saveBtn" type="submit">บันทึกออเดอร์</button><button class="secondary hidden" style="width:100%;margin-top:8px" id="cancelEdit" type="button">ยกเลิกการแก้ไข</button></form><p class="hint">* ช่องที่มีเครื่องหมายดอกจันจำเป็นต้องกรอก ยอดค้าง = ยอดออเดอร์ − เงินที่รับแล้ว</p></section>
-<section class="panel orders"><h2>📋 รายการออเดอร์</h2><div class="toolbar"><input id="search" placeholder="ค้นหาชื่อลูกค้าหรือเบอร์โทร"><select id="filter" aria-label="กรองสถานะ"><option value="ทั้งหมด">ทุกสถานะ</option><option>รอจัดส่ง</option><option>ส่งแล้ว</option><option>ยกเลิก</option></select></div><div id="orderList"></div><p class="hint">ตารางจะแสดงทันทีหลังบันทึกออเดอร์ เลื่อนตารางไปทางซ้ายหรือขวาได้บนมือถือ แตะ “แก้ไข” เพื่อบันทึกเงินเพิ่มหรือเปลี่ยนข้อมูล และแตะ “ลบ” เมื่อต้องการเอารายการออก</p></section>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f4f6f8;color:#202938;margin:0;padding:16px}
+main{max-width:1000px;margin:auto}
+h1{font-size:25px;margin-bottom:6px}
+.sub{color:#64748b;margin-bottom:18px}
+.panel,.stat{background:white;padding:16px;border-radius:14px;margin-bottom:14px;box-shadow:0 2px 8px #0000000a}
+h2{font-size:18px;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-size:14px;font-weight:bold;margin-bottom:5px}
+input,select,textarea,button{font:inherit}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;background:white}
+textarea{resize:vertical}
+button{border:0;border-radius:8px;padding:11px 14px;cursor:pointer;font-weight:bold}
+.primary{background:#166534;color:white}
+.secondary{background:#e2e8f0;color:#1e293b}
+.danger{background:#fee2e2;color:#991b1b}
+.price-buttons{display:flex;gap:8px}
+.price-buttons button{flex:1;border:2px solid #cbd5e1;background:white}
+.price-buttons button.active{border-color:#166534;background:#dcfce7;color:#166534}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{margin:0;padding:12px}
+.stat small{display:block;color:#64748b;font-size:12px}
+.stat strong{display:block;font-size:19px;margin-top:6px;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+th{background:#f8fafc;white-space:nowrap}
+td{min-width:90px}
+td button{margin:2px;padding:7px;font-size:12px}
+.status{display:inline-block;padding:4px 7px;border-radius:6px;background:#e2e8f0}
+#message{margin:10px 0;color:#166534;font-size:14px}
+.muted{color:#64748b;font-size:13px}
+@media(max-width:520px){
+ body{padding:10px}
+ .grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr}
+ .stat strong{font-size:21px}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>🥚 ระบบจดออเดอร์ไข่เป็ด</h1>
+<div class="sub">บันทึกออเดอร์ ติดตามการส่ง และเช็กยอดรับเงิน</div>
 
-</main><footer>ระบบจดออเดอร์ไข่เป็ด • เก็บข้อมูลในอุปกรณ์นี้</footer>
+<div class="stats">
+ <div class="stat"><small>ยอดขายรวม</small><strong id="sales">0 บาท</strong></div>
+ <div class="stat"><small>รับเงินแล้ว</small><strong id="received">0 บาท</strong></div>
+ <div class="stat"><small>ยอดค้างชำระ</small><strong id="due">0 บาท</strong></div>
+</div>
+
+<section class="panel">
+<h2 id="formTitle">เพิ่มออเดอร์ใหม่</h2>
+<form id="orderForm">
+ <div class="grid">
+  <div>
+   <label for="customer">ชื่อลูกค้า *</label>
+   <input id="customer" required maxlength="100" placeholder="ชื่อผู้สั่งซื้อ">
+  </div>
+  <div>
+   <label for="phone">เบอร์โทรศัพท์</label>
+   <input id="phone" type="tel" maxlength="30" placeholder="เบอร์โทรลูกค้า">
+  </div>
+  <div>
+   <label>ราคาต่อถาด *</label>
+   <div class="price-buttons">
+    <button type="button" data-price="125" class="active">125 บาท</button>
+    <button type="button" data-price="135">135 บาท</button>
+   </div>
+  </div>
+  <div>
+   <label for="qty">จำนวนถาด *</label>
+   <input id="qty" type="number" min="1" step="1" required value="1">
+  </div>
+  <div>
+   <label for="orderDate">วันที่สั่งซื้อ *</label>
+   <input id="orderDate" type="date" required>
+  </div>
+  <div>
+   <label for="deliveryDate">วันที่นัดส่ง</label>
+   <input id="deliveryDate" type="date">
+  </div>
+  <div>
+   <label for="deliveryStatus">สถานะจัดส่ง</label>
+   <select id="deliveryStatus">
+    <option>รอจัดส่ง</option>
+    <option>จัดส่งแล้ว</option>
+    <option>ยกเลิก</option>
+   </select>
+  </div>
+  <div>
+   <label for="paid">รับเงินแล้ว (บาท)</label>
+   <input id="paid" type="number" min="0" step="1" value="0">
+  </div>
+  <div style="grid-column:1/-1">
+   <label for="note">หมายเหตุ</label>
+   <textarea id="note" rows="2" maxlength="500" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+  </div>
+ </div>
+ <p><strong>ยอดออเดอร์นี้: <span id="preview">125 บาท</span></strong></p>
+ <div class="actions">
+  <button class="primary" id="saveBtn" type="submit">บันทึกออเดอร์</button>
+  <button class="secondary" id="cancelEdit" type="button" hidden>ยกเลิกการแก้ไข</button>
+ </div>
+ <div id="message" role="status"></div>
+</form>
+</section>
+
+<section class="panel">
+<h2>รายการออเดอร์</h2>
+<div class="grid" style="margin-bottom:12px">
+ <div><label for="search">ค้นหาลูกค้า / เบอร์โทร</label><input id="search" placeholder="พิมพ์คำค้นหา"></div>
+ <div><label for="filter">กรองสถานะจัดส่ง</label>
+  <select id="filter">
+   <option value="">ทุกสถานะ</option>
+   <option>รอจัดส่ง</option>
+   <option>จัดส่งแล้ว</option>
+   <option>ยกเลิก</option>
+  </select>
+ </div>
+</div>
+<div id="loading" class="muted">กำลังเชื่อมต่อฐานข้อมูล...</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th>ลูกค้า / เบอร์โทร</th><th>วันที่สั่ง</th><th>วันส่ง</th>
+<th>จำนวน</th><th>ยอดขาย</th><th>รับแล้ว</th>
+<th>ค้าง</th><th>สถานะ</th><th>จัดการ</th>
+</tr></thead>
+<tbody id="orderRows"></tbody>
+</table>
+</div>
+<p id="empty" class="muted" hidden>ยังไม่มีออเดอร์</p>
+</section>
+<p class="muted">ข้อมูลบันทึกใน Firebase เพื่อให้เครื่องที่เปิดเว็บนี้เห็นรายการร่วมกัน</p>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
-(()=>{'use strict';const KEY='duckEggOrdersV1';let orders=[];try{orders=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(orders))orders=[]}catch(e){orders=[]}const $=id=>document.getElementById(id);const money=n=>'฿'+Number(n||0).toLocaleString('th-TH',{maximumFractionDigits:2});const today=()=>{let d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};$('orderDate').value=today();$('delivery').value=today();let selectedPrice=125;
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(orders));return true}catch(e){alert('บันทึกข้อมูลไม่สำเร็จ พื้นที่เก็บข้อมูลอาจเต็ม กรุณาส่งออกไฟล์สำรอง');return false}}
-function totals(){let active=orders.filter(o=>o.deliveryStatus!=='ยกเลิก');let sales=active.reduce((s,o)=>s+o.total,0),paid=active.reduce((s,o)=>s+o.paid,0),due=active.reduce((s,o)=>s+Math.max(0,o.total-o.paid),0);$('sales').textContent=money(sales);$('paid').textContent=money(paid);$('due').textContent=money(due)}
-function calc(){let q=Math.max(0,Number($('qty').value)||0),t=q*selectedPrice,p=Math.max(0,Number($('paidInput').value)||0);$('total').textContent=money(t);$('liveDue').textContent=money(Math.max(0,t-p))}
-function setPrice(p){selectedPrice=Number(p);$('price').value=p;document.querySelectorAll('.price').forEach(b=>b.classList.toggle('active',Number(b.dataset.price)===selectedPrice));calc()}
-document.querySelectorAll('.price').forEach(b=>b.addEventListener('click',()=>setPrice(b.dataset.price)));$('qty').addEventListener('input',calc);$('paidInput').addEventListener('input',calc);$('minus').onclick=()=>{$('qty').value=Math.max(1,(Number($('qty').value)||1)-1);calc()};$('plus').onclick=()=>{$('qty').value=Math.max(1,(Number($('qty').value)||1)+1);calc()};
-function resetForm(){ $('orderForm').reset();$('editId').value='';$('qty').value=1;$('paidInput').value=0;$('orderDate').value=today();$('delivery').value=today();$('deliveryStatus').value='รอจัดส่ง';$('formTitle').textContent='➕ จดออเดอร์ใหม่';$('saveBtn').textContent='บันทึกออเดอร์';$('cancelEdit').classList.add('hidden');setPrice(125);calc() }
-$('cancelEdit').onclick=resetForm;
-$('orderForm').addEventListener('submit',e=>{e.preventDefault();let customer=$('customer').value.trim(),qty=Number($('qty').value),paid=Number($('paidInput').value)||0;if(!customer){alert('กรุณาใส่ชื่อลูกค้า');return}if(!Number.isInteger(qty)||qty<1){alert('จำนวนแผงต้องเป็นเลขตั้งแต่ 1 ขึ้นไป');return}let total=qty*selectedPrice;if(paid<0){alert('เงินที่รับแล้วต้องไม่ติดลบ');return}if(paid>total){if(!confirm('เงินที่รับมากกว่ายอดออเดอร์ ต้องการบันทึกต่อหรือไม่?'))return}let id=$('editId').value;let item={id:id||String(Date.now())+'-'+Math.random().toString(36).slice(2,7),customer,phone:$('phone').value.trim(),orderDate:$('orderDate').value,delivery:$('delivery').value,price:selectedPrice,qty,total,paid,deliveryStatus:$('deliveryStatus').value,note:$('note').value.trim(),updatedAt:new Date().toISOString()};if(id){let idx=orders.findIndex(o=>o.id===id);if(idx>=0)orders[idx]=item;else orders.unshift(item)}else{item.createdAt=item.updatedAt;orders.unshift(item)}if(persist()){resetForm();render();window.scrollTo({top:0,behavior:'smooth'})}});
-function fmtDate(s){if(!s)return '-';let a=s.split('-');return a.length===3?`${a[2]}/${a[1]}/${a[0]}`:s}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function render(){totals();let q=$('search').value.trim().toLowerCase(),f=$('filter').value;let arr=orders.filter(o=>(f==='ทั้งหมด'||o.deliveryStatus===f)&&(!q||(o.customer+' '+o.phone).toLowerCase().includes(q)));let root=$('orderList');if(!arr.length){root.innerHTML='<div class="empty">'+(orders.length?'ไม่พบออเดอร์ที่ตรงกับการค้นหา':'ยังไม่มีออเดอร์ กรอกข้อมูลแล้วกด “บันทึกออเดอร์” รายการจะมาแสดงตรงนี้')+'</div>';return}root.innerHTML='<div class="tablewrap"><table class="ordertable"><thead><tr><th>ลูกค้า / เบอร์โทร</th><th>วันที่สั่ง</th><th>วันส่ง</th><th>จำนวน</th><th>ยอดออเดอร์</th><th>รับเงินแล้ว</th><th>ค้างชำระ</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>'+arr.map(o=>{let due=Math.max(0,o.total-o.paid),pill=o.deliveryStatus==='ส่งแล้ว'?'done':o.deliveryStatus==='ยกเลิก'?'cancel':'wait';return `<tr><td><div class="customername">${esc(o.customer)}</div><div class="muted">${esc(o.phone||'ไม่มีเบอร์โทร')}</div>${o.note?`<div class="muted">หมายเหตุ: ${esc(o.note)}</div>`:''}</td><td>${fmtDate(o.orderDate||(o.createdAt||'').slice(0,10))}</td><td>${fmtDate(o.delivery)}</td><td class="num">${o.qty} แผง<br><span class="muted">${o.price} บ./แผง</span></td><td class="num">${money(o.total)}</td><td class="num">${money(o.paid)}</td><td class="num ${due?'duecell':'duezero'}">${money(due)}</td><td><span class="pill ${pill}">${esc(o.deliveryStatus)}</span></td><td class="actions"><button class="secondary" data-edit="${esc(o.id)}">แก้ไข</button><button class="secondary danger" data-delete="${esc(o.id)}">ลบ</button></td></tr>`}).join('')+'</tbody></table></div>';root.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>edit(b.dataset.edit));root.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>removeOrder(b.dataset.delete))}
-function edit(id){let o=orders.find(x=>x.id===id);if(!o)return;$('editId').value=o.id;$('customer').value=o.customer;$('phone').value=o.phone||'';$('orderDate').value=o.orderDate||(o.createdAt||'').slice(0,10)||today();$('delivery').value=o.delivery||today();$('qty').value=o.qty;$('paidInput').value=o.paid;$('deliveryStatus').value=o.deliveryStatus;$('note').value=o.note||'';setPrice(o.price);$('formTitle').textContent='✏️ แก้ไขออเดอร์';$('saveBtn').textContent='บันทึกการแก้ไข';$('cancelEdit').classList.remove('hidden');$('formTitle').scrollIntoView({behavior:'smooth',block:'start'})}
-function removeOrder(id){let o=orders.find(x=>x.id===id);if(!o||!confirm('ต้องการลบออเดอร์ของ '+o.customer+' ใช่หรือไม่?'))return;orders=orders.filter(x=>x.id!==id);if(persist())render()}
-$('search').addEventListener('input',render);$('filter').addEventListener('change',render);
+const firebaseConfig = {
+  apiKey: "AIzaSyBLkRBYsbCpZmKPuFlf4FSi50AELr46WKw",
+  authDomain: "eggduckwaiya.firebaseapp.com",
+  databaseURL: "https://eggduckwaiya-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "eggduckwaiya",
+  storageBucket: "eggduckwaiya.firebasestorage.app",
+  messagingSenderId: "932383285255",
+  appId: "1:932383285255:web:0958dacc81cf366d688aa2",
+  measurementId: "G-GKN05BJ84C"
+};
 
-render();calc();
-})();
-</script></body></html>
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const ordersRef = db.ref("orders");
+
+let orders = [];
+let selectedPrice = 125;
+let editingId = null;
+let connected = false;
+
+const $ = id => document.getElementById(id);
+const money = n => Number(n || 0).toLocaleString("th-TH") + " บาท";
+const today = () => {
+ const d = new Date();
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+};
+const safe = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+function totalOf(o){return Number(o.price||0)*Number(o.qty||0)}
+function paidOf(o){return Math.min(totalOf(o),Math.max(0,Number(o.paid||0)))}
+function dueOf(o){return Math.max(0,totalOf(o)-paidOf(o))}
+function showMessage(text,isError=false){
+ $("message").textContent=text;
+ $("message").style.color=isError?"#b91c1c":"#166534";
+}
+
+function updatePreview(){
+ const qty=Math.max(0,Number($("qty").value||0));
+ $("preview").textContent=money(selectedPrice*qty);
+}
+document.querySelectorAll("[data-price]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  selectedPrice=Number(btn.dataset.price);
+  document.querySelectorAll("[data-price]").forEach(b=>b.classList.toggle("active",b===btn));
+  updatePreview();
+ });
+});
+$("qty").addEventListener("input",updatePreview);
+
+function resetForm(){
+ editingId=null;
+ $("orderForm").reset();
+ $("orderDate").value=today();
+ $("qty").value=1;
+ $("paid").value=0;
+ selectedPrice=125;
+ document.querySelectorAll("[data-price]").forEach(b=>b.classList.toggle("active",b.dataset.price==="125"));
+ $("formTitle").textContent="เพิ่มออเดอร์ใหม่";
+ $("saveBtn").textContent="บันทึกออเดอร์";
+ $("cancelEdit").hidden=true;
+ updatePreview();
+}
+$("cancelEdit").addEventListener("click",()=>{resetForm();showMessage("");});
+
+$("orderForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!connected){showMessage("ยังเชื่อมต่อฐานข้อมูลไม่ได้ กรุณารอสักครู่แล้วลองใหม่",true);return}
+ const qty=Number($("qty").value);
+ const paid=Number($("paid").value||0);
+ if(!Number.isInteger(qty)||qty<1){showMessage("กรุณาระบุจำนวนถาดอย่างน้อย 1 ถาด",true);return}
+ if(!Number.isFinite(paid)||paid<0){showMessage("ยอดรับเงินต้องไม่ติดลบ",true);return}
+ const record={
+  customer:$("customer").value.trim(),
+  phone:$("phone").value.trim(),
+  price:selectedPrice,
+  qty,
+  orderDate:$("orderDate").value,
+  deliveryDate:$("deliveryDate").value,
+  deliveryStatus:$("deliveryStatus").value,
+  paid,
+  note:$("note").value.trim(),
+  updatedAt:Date.now()
+ };
+ if(!record.customer){showMessage("กรุณากรอกชื่อลูกค้า",true);return}
+ if(paid>record.price*qty){showMessage("ยอดรับเงินต้องไม่เกินยอดออเดอร์",true);return}
+ const button=$("saveBtn");
+ button.disabled=true;
+ try{
+  if(editingId){
+   await ordersRef.child(editingId).update(record);
+   showMessage("แก้ไขออเดอร์เรียบร้อย");
+  }else{
+   record.createdAt=Date.now();
+   await ordersRef.push(record);
+   showMessage("บันทึกออเดอร์เรียบร้อย");
+  }
+  resetForm();
+ }catch(err){
+  console.error(err);
+  showMessage("บันทึกไม่สำเร็จ: "+err.message,true);
+ }finally{button.disabled=false}
+});
+
+function render(){
+ const active=orders.filter(o=>o.deliveryStatus!=="ยกเลิก");
+ $("sales").textContent=money(active.reduce((s,o)=>s+totalOf(o),0));
+ $("received").textContent=money(active.reduce((s,o)=>s+paidOf(o),0));
+ $("due").textContent=money(active.reduce((s,o)=>s+dueOf(o),0));
+
+ const term=$("search").value.trim().toLowerCase();
+ const filter=$("filter").value;
+ const list=orders.filter(o=>{
+  const matchText=(o.customer+" "+o.phone).toLowerCase().includes(term);
+  return matchText&&(!filter||o.deliveryStatus===filter);
+ }).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+ $("orderRows").innerHTML=list.map(o=>{
+  const id=safe(o.id);
+  return `<tr>
+   <td><strong>${safe(o.customer)}</strong><br>${safe(o.phone)}</td>
+   <td>${safe(o.orderDate||"-")}</td>
+   <td>${safe(o.deliveryDate||"-")}</td>
+   <td>${safe(o.qty)} ถาด<br><span class="muted">${safe(o.price)} บาท/ถาด</span></td>
+   <td>${money(totalOf(o))}</td>
+   <td>${money(paidOf(o))}</td>
+   <td>${money(dueOf(o))}</td>
+   <td><span class="status">${safe(o.deliveryStatus||"รอจัดส่ง")}</span></td>
+   <td><button class="secondary" data-edit="${id}">แก้ไข</button>
+   <button class="danger" data-delete="${id}">ลบ</button></td>
+  </tr>`;
+ }).join("");
+
+ $("empty").hidden=list.length!==0;
+}
+
+$("orderRows").addEventListener("click",async e=>{
+ const edit=e.target.closest("[data-edit]");
+ const del=e.target.closest("[data-delete]");
+ if(edit){
+  const o=orders.find(x=>x.id===edit.dataset.edit);
+  if(!o)return;
+  editingId=o.id;
+  $("customer").value=o.customer||"";
+  $("phone").value=o.phone||"";
+  selectedPrice=Number(o.price)===135?135:125;
+  document.querySelectorAll("[data-price]").forEach(b=>b.classList.toggle("active",Number(b.dataset.price)===selectedPrice));
+  $("qty").value=o.qty||1;
+  $("orderDate").value=o.orderDate||today();
+  $("deliveryDate").value=o.deliveryDate||"";
+  $("deliveryStatus").value=o.deliveryStatus||"รอจัดส่ง";
+  $("paid").value=o.paid||0;
+  $("note").value=o.note||"";
+  $("formTitle").textContent="แก้ไขออเดอร์";
+  $("saveBtn").textContent="บันทึกการแก้ไข";
+  $("cancelEdit").hidden=false;
+  updatePreview();
+  window.scrollTo({top:0,behavior:"smooth"});
+ }
+ if(del){
+  const o=orders.find(x=>x.id===del.dataset.delete);
+  if(!o)return;
+  if(confirm("ยืนยันลบออเดอร์ของ "+o.customer+"? การลบนี้จะมีผลกับทุกเครื่อง")){
+   try{await ordersRef.child(o.id).remove();showMessage("ลบออเดอร์แล้ว")}
+   catch(err){showMessage("ลบไม่สำเร็จ: "+err.message,true)}
+  }
+ }
+});
+$("search").addEventListener("input",render);
+$("filter").addEventListener("change",render);
+
+db.ref(".info/connected").on("value",snap=>{
+ connected=snap.val()===true;
+ $("loading").textContent=connected?"เชื่อมต่อ Firebase แล้ว":"กำลังเชื่อมต่อ Firebase...";
+});
+
+ordersRef.on("value",snap=>{
+ const data=snap.val()||{};
+ orders=Object.entries(data).map(([id,o])=>({...o,id}));
+ $("loading").textContent=connected?"เชื่อมต่อ Firebase แล้ว":"กำลังโหลดข้อมูล...";
+ render();
+},err=>{
+ $("loading").textContent="โหลดข้อมูลไม่สำเร็จ: "+err.message;
+ showMessage("อ่านข้อมูลไม่ได้ กรุณาตรวจสอบ Firebase Rules และการเชื่อมต่อ",true);
+});
+
+resetForm();
+</script>
+</body>
+</html>
